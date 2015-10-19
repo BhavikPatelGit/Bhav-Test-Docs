@@ -1,0 +1,11 @@
+unknown:Test_Resources sanjayhari$ git init
+Initialized empty Git repository in /Users/sanjayhari/Documents/Test_Resources/.git/
+
+unknown:Test_Resources sanjayhari$ git add .
+unknown:Test_Resources sanjayhari$ git commit -m 'initial comit'
+#[master (root-commit) add0d92] initial comit
+#62 files changed, 2110 insertions(+), 0 deletions(-)
+
+unknown:Test_Resources sanjayhari$ git remote add origin git@github.com:sanjayh/Test_Resources.git
+unknown:Test_Resources sanjayhari$ git push -u origin master
+

@@ -1,0 +1,234 @@
+selenium-webdriver-commands
+Testing \
+ Rating: 1 Star2 Stars3 Stars4 Stars5 Stars
+15 MOST COMMONLY USED SELENIUM WEBDRIVER COMMAND’S IN JAVA
+
+
+ 
+
+
+Selenium 2.0 also known as WebDriver is the best automation tool for web and offers very user friendly learning and impressive work. WebDriver has covered all the limitation of Selenium RC and work on a standalone server. Here is the basic and most commonly used functions of  WebDriver with Java.
+
+POPUP WINDOWS AND FRAMES
+
+Popup window handling is one of the must handle things in Automation and Webdriver does is really well. Using the window handle command.
+
+
+ 
+
+1
+2
+3
+4
+String winHandleBefore = driver.getWindowHandle();
+for(String winHandle : driver.getWindowHandles()){
+driver.switchTo().window(winHandle);
+}
+Once action is performed, switch back to parent window.
+
+
+1
+driver.switchTo().window(driver.getWindowHandle());
+LIST BOX
+
+Select an item in Listbox using Selenium Webdriver is quite easy, there two way’s to do it.
+
+
+1
+2
+3
+4
+5
+6
+WebElement select = driver.findElement(By.id("selection"));
+List&lt;WebElement&gt; options = select.findElements(By.tagName("option"));
+for (WebElement option : options) {
+if("Germany".equals(option.getText()))
+option.click();
+}
+Or
+
+
+1
+2
+WebElement roleDropdown = driver.findElement(By.id("");
+roleDropdown.click();
+Then
+
+
+1
+2
+WebElement roleOptionOne = driver.findElement(By.id(FIRST_OPTION));
+roleOptionOne.click();
+RIGHT CLICK
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+WebElement webelement = driver.findElement(By.xpath("*Xpath Locator*"));
+ 
+Actions actions = new Actions(driver);
+Action action = actions.contextClick(webelement).build();
+action.perform();
+<h2>Double Click</h2>
+Actions action = new Actions(driver);
+action.doubleClick(myElemment);
+action.perform();
+EXCEL READER
+
+Read or write data from excel using the jxl or POI, I will prefer POI. Create a property reader file then read the data
+
+
+1
+2
+Workbook workbook = WorkbookFactory.create(new FileInputStream(file));
+Sheet sheet = workbook.getSheetAt(0);
+DATABASE CONNECTION
+
+To connect to Database using WebDriver with Java, we use DBC(“Java Database Connectivity) API.
+
+
+1
+DriverManager.getConnection(URL, "username", "password" )
+TIME OUTS – WAIT
+
+Implicit Waits:
+
+
+1
+driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+Or
+
+
+1
+Thread.sleep(1000);
+EXPLICIT WAITS
+
+
+1
+2
+3
+4
+5
+WebDriverWait wait = new WebDriverWait(driver, 10);
+WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("someid")));
+<h2>Alert Box</h2>
+driver.findElement(By.id("updateButton")).click();
+Alert alert = driver.switchTo().alert();
+alert.accept(); or alert.dismiss();
+
+NAVIGATION
+
+
+1
+2
+3
+4
+5
+6
+7
+driver.navigate().to(www.google.com);
+driver.get("http://www.google.com");
+driver.navigate().forward();
+driver.navigate().back();
+driver.navigate().refresh();
+driver.manage().deleteAllCookies();
+driver.close();
+TABLE COLUMNS
+
+
+1
+2
+WebElement Table = driver.findElement(By.id("")));
+List&lt;WebElement&gt; Row = Table.findElements(By.tagName("tr"));
+DRAG AND DROP
+
+
+1
+2
+3
+4
+WebElement element = driver.findElement(By.name("source"));
+WebElement target = driver.findElement(By.name("target"));
+ 
+(new Actions(driver)).dragAndDrop(element, target).perform();
+MOUSE OVER
+
+
+1
+2
+3
+4
+Actions actions = new Actions(driver);
+WebElement mouseover = driver.findElement(By.id(""));
+actions.moveToElement(mouseover);
+actions.click().perform();
+ISELEMENT/TEXTPRESENT
+
+There are various way to check weather an element is present of not before execution of a piece of code.
+
+OPTION 1
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+private boolean isElementPresent(WebDriver driver, By by){
+try{
+driver.findElement(by);
+return true;
+}catch(NoSuchElementException e){
+return false;
+}
+}
+OPTION 2
+
+
+1
+2
+3
+4
+5
+6
+if (driver.findElements(locator).size() &gt; 0) {
+return true;
+} else {
+return false;
+}
+}
+OPTION 3
+
+Sweet and simple one line of code
+
+
+1
+Webelement elementpresent = driver.PageSource.Contains("Sign out")
+WEB ELEMENTS FINDING
+
+These are generic ways to do certain common task i.e.
+
+Id: WebElement element = driver.findElement(By.id(""));
+
+Name: WebElement element = driver.findElement(By.name(""));
+
+Tag Name: WebElement frame = driver.findElement(By.tagName("iframe"));
+
+Xpath: WebElement element = driver.findElement(By.xpath.name(""));
+
+CSS: WebElement element = driver.findElement(By.CSS.name(""));
+
+LinkText: WebElement element = driver.findElement(By.LinkText.(""));
+
+I hope these commands will let you work with Selenium WebDriver like a star. Please leave us a comment and share your own experiences, commands with us.

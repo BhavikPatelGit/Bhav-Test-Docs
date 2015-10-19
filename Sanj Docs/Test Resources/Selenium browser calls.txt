@@ -1,0 +1,7 @@
+*iexplore - Launches IE
+*firefox - Launches Firefox
+*safari - Launches Safari
+*opera - Launches Opera
+*googlechrome - Launches Google Chrome [include path to chrome.exe]
+*chrome - Launches special Firefox profile with elevated security privileges, to bypass Javascript security errors
+*iehta - Launches IE with elevated security privileges

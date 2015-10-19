@@ -1,0 +1,30 @@
+Unix commands:
+
+#lists all background processes
+ps -ax | grep java
+------------------------
+#kills background process
+sudo kill <Process ID>
+----------------------
+#selenium rc server
+#!/bin/bash
+
+## date format ##
+NOW="$(date +%Y%m%d_%H-%M-%S)"
+
+cd /Users/sanjayhari/Desktop/selenium-grid-1.0.8
+java -jar selenium-server-standalone-2.32.0.jar -htmlSuite "*googlechrome" "http://google.com" "/Users/sanjayhari/Desktop/IDE_Tests/testSuite.htm" "/Users/sanjayhari/Desktop/IDE_Tests/results_$NOW.htm"
+-------------------------
+#selenium grid server
+#!/bin/bash
+
+Run the hub on background:
+#!/bin/bash
+cd /Users/sanjayhari/Desktop/selenium-grid-1.0.8
+java -jar selenium-server-standalone-2.32.0.jar -role hub & 
+
+sleep 10
+
+cd /Users/sanjayhari/Desktop/selenium-grid-1.0.8
+java -jar selenium-server-standalone-2.32.0.jar -role node -hub http://localhost:4444/grid/register
+--------------------------

@@ -1,0 +1,433 @@
+            
+========================================================================================================================
+ TARGETING ELEMENTS WITHIN A HTML DOCUMENT
+========================================================================================================================
+
+With the Selenium IDE, there are various ways of targeting an element or groups of elements within the HTML document.
+
+In this course, I would focus mainly on the methodologies that are most efficient.
+
+Whenever possible, it is strongly recommended to stay away from using unstable element locators such as xpaths to target elements
+on the page. Xpaths are considerably fragile because minimal changes in the structure of the HTML document could render current targeting queries
+invalid. In environments where the structure of the HTML document changes frequently, keeping track of elements using XPaths can become
+a maintenance nightmare.
+
+CSS Selectors are strongly recommended over Xpaths.
+
+In general, your choice of element locators should also not be based on textual content in the HTML document,
+whenever it is possible for you to avoid it.
+
+Rather, it should be based on element identifiers, unique attribute values or other structural information that is stable enough to witstand
+frequent changes to the web application without breaking the queries used to look up the elements.
+
+========================================================================================================================
+TARGET ELEMENTS USING IDS
+========================================================================================================================
+The id attribute can be used to uniquely identify an element within a HTML document
+
+<input id="firstName" name="fname" type="text" value="" />
+
+<div id="moduleName">
+
+</div>
+
+In the above examples, the input field and the div container have thier ids as firstName and moduleName respectively.
+
+In the selenium IDE we would target these elements as follows respectively
+
+- id=firstName
+- id=moduleName
+
+========================================================================================================================
+TARGET ELEMENTS USING NAMES
+========================================================================================================================
+The name attribute can be used to identify an element within a HTML document
+
+<input name="fname" type="text" value="" />
+
+<a name="topOfPage"></a>
+
+In the above examples, the input field and the hyperlink have thier names as firstName and topOfPage respectively.
+
+In the selenium IDE we would target these elements as follows respectively
+
+- name=fname
+- name=topOfPage
+
+========================================================================================================================
+TARGET LINKS
+========================================================================================================================
+
+This is a simple method of locating a hyperlink in your web page by using the text of the link.
+
+If two links with the same text are present, then the first match will be used.
+
+<a href="login.php">Login</a>
+
+<a href="control-panel.php">Control Panel</a>
+
+In the above examples, the links can be targeted by using the following locators in selenium
+
+link=Login
+
+link=Control Panel
+
+This method is not recommended, however you may use it if you know that the text for the hyperlink is not dynamic or is likely
+to change frequently.
+
+========================================================================================================================
+TARGET ELEMENTS USING CSS SELECTORS
+========================================================================================================================
+
+I strongly recommend CSS selectors as the locating strategy of choice.
+
+CSS selectors are considerably faster than XPath and can find the most complicated objects in any HTML document.
+
+Additional documentation on CSS selectors is available on the link below
+
+http://www.w3.org/TR/CSS2/selector.html
+
+There are several CSS selectors, but I am going to introduce you to a few of them as we gradually build our case to more complex examples.
+
+(a) Element Selectors
+
+(b) ID Selectors
+
+(c) Class Selectors
+
+<html>
+    <head>
+        <title>CSS Selectors</title>
+    </head>
+    <body>
+        <h3 id="moduleHeader">Page Module Header</h3>
+        <div class="primaryContainerModule">
+            <h4 id="pageSub">Subtitle</h4>
+        </div>
+        <form id="pageForm" method="post" action="process.php">
+            <input type="text" name="username" value="" />
+            <input type="password" name="password" value="" />
+            <input type="submit" name="submitbutton" value="Submit Form" />
+        </form>
+    </body>
+</html>
+
+========================================================================================================================
+Element Selectors
+========================================================================================================================
+Element selectors use the name of the element to locate the element.
+
+In the above document, we can target the subtitle by using the following CSS selector
+
+css=h4
+
+We can also target the page module by using the following css selector
+
+css=h3
+
+========================================================================================================================
+ID Selectors (CONTAINS HASH OR POUND SIGN)
+========================================================================================================================
+
+ID selectors use place a hash or pound sign in front of the id value of that element
+
+In the above document, we can target the subtitle by using the following CSS selector
+
+css=#pageSub
+
+We can also target the page module by using the following css selector
+
+css=#moduleHeader
+
+========================================================================================================================
+Class Selectors (CONTAINS DOTS)
+========================================================================================================================
+
+Class selectors place a dot in front of the class attribute value of that element
+
+In the above document, we can target the primary container by using the following CSS selector
+
+css=.primaryContainerModule
+
+========================================================================================================================
+Class Selectors Multiple (CONTAINS DOTS)
+========================================================================================================================
+
+<input type="checkbox" class="europe asia africa" value="Continent" />
+
+If the element has multiple classes, you can target it by specifying the classes concatenated using dots
+
+css=.europe.asia.africa
+
+========================================================================================================================
+COMBINING SELECTORS
+========================================================================================================================
+
+Sometimes when a particular selector matches more than one element, you may need to combine selectors to clarify things
+
+Here is some of that syntax
+
+css=div#party
+
+In the above example, we are combining the div element selector with the party id selector
+
+css=div.party
+
+In the above example, we are combining the div element selector with the party class selector
+
+========================================================================================================================
+SELECTING ELEMENTS WITH CERTAIN ATTRIBUTES
+========================================================================================================================
+We can also select certain elements that have certain attribute values.
+
+In the form above, we can target the submit button by using the following syntax.
+
+css=input[type=submit]
+
+========================================================================================================================
+SELECTING ELEMENTS USING MULTIPLE ATTRIBUTES
+========================================================================================================================
+
+<input type="text" class="europe asia africa" value="Continent" />
+<input type="text" class="europe asia africa" value="Company" />
+<input type="checkbox" class="europe asia africa" value="Continent" />
+<input type="checkbox" class="europe asia africa" value="Company" />
+<input type="hidden" class="europe asia africa" value="Continent" />
+
+In the above example, if we wanted to target the checkbox with value Continent, we can use the following selector:
+
+css=input[type=checkbox][value=Continent]
+
+========================================================================================================================
+DESCENDANT SELECTORS
+========================================================================================================================
+
+This type of selectors are using to access elements located with other elements when the locator can hit multiple matches
+
+A space is needed between each selector leading to the target from the ancestor to the descendant going from left to right
+
+In the HTML source below, we can use the descendant selectors to distinguish between the Page Module Header and the Subtitle for and automation engineer.
+
+If we want to target the h3 element for the subtitle for an automation engineer, we cannot use css=h3 because selenium will stop the search once it comes across the Page Module Header h3 element.
+
+Selenium will always stop the search as soon as it finds the first match. So we need to be more specific by using descendant selectors.
+
+Using the following CSS selector will allow us to distinguish between the Page Module Header and the Subtitle for an Automation Engineer.
+
+css=div.primaryModuleContainer div.automationEngineer h3
+
+<html>
+    <head>
+        <title>CSS Selectors</title>
+    </head>
+    <body>
+
+        <div>
+            <h3>Page Module Header</h3>
+        </div>
+
+        <div class="primaryContainerModule">
+
+            <video width="320" height="240" controls="controls"></video>
+
+            <div class="softwareEngineer">
+                <h3>Subtitle</h3>
+            </div>
+
+            <div class="qualityAssuranceEngineer">
+                <h3>Subtitle</h3>
+            </div>
+
+            <div class="automationEngineer">
+                <h3>Subtitle</h3>
+            </div>
+
+            <div>
+                <video width="320" height="240" controls="controls"></video>
+            <div>
+
+        </div>
+    </body>
+</html>
+
+For more on CSS selectors, please checkout this page
+
+http://www.w3.org/TR/CSS2/selector.html#pattern-matching
+
+========================================================================================================================
+CHILD SELECTORS OR DIRECT DESCENDANTS
+========================================================================================================================
+
+<A>
+    <C>
+        <F></F>
+    </C>
+    <B>
+        <E>
+            <G></G>
+            <D></D>
+        </E>
+    <B>
+</A>
+
+This selector is very similar to the previous selector we just discussed "Descendant Selectors".
+
+The main difference between the descendant selector and the child selector is that in:
+
+(1) Descendant Selectors, the ancestor A does not have to be an immediate parent to the descendant D
+(2) Child Selectors, the ancestor A must be an immediate parent of the child C
+
+In the document above:
+
+* G is an immediate child of E.
+* F is an immediate child of C.
+* E is an immediate child of B
+* C is an immediate child of A
+* B is an immediate child of A
+* C is an immediate parent of F
+* E is an immediate parent of G
+
+* G is a descendant of B but not an immediate child of B
+* F is a descendent of A but not an immediate child of A
+
+To target an immediate child, you need to place the greater than sign > between the parent and the immediate child.
+
+parent > child
+
+In the document below we have two video elements inside the Primary Container Module.
+
+The first video element (from top to bottom), is a descendant of the Primary Container Module  but not its immediate child.
+
+The second video element, is a direct descendant of the Primary Container Module (an immediate child).
+
+If we need to target the second video element, we cannot use the descendant selector syntax css=div.primaryContainerModule video
+
+Selenium will stop searching once it hits the first video element because it matches that query.
+
+We need to specify the following css selector, to target the ONLY the second video element.
+
+css=div.primaryContainerModule > video
+
+The query above specifies that we are looking for a video element that is an immediate child of a div element with the class primaryContainerModule
+
+Since the first video element is not an immediate child, this query will find the second video element.
+
+We can use the following selector to target only the first video element
+
+css=div.primaryContainerModule > div > video
+
+The query above specifies that we are looking for a video element that
+is an immediate child of a div that is an immediate child of a div element with the class primaryContainerModule
+
+<html>
+    <head>
+        <title>CSS Selectors</title>
+    </head>
+    <body>
+
+        <div>
+            <h3>Page Module Header</h3>
+        </div>
+
+        <div class="primaryContainerModule">
+
+            <div>
+                <video width="320" height="240" controls="controls"></video>
+            <div>
+
+            <video width="320" height="240" controls="controls"></video>
+
+            <div class="softwareEngineer">
+                <h3>Subtitle</h3>
+            </div>
+
+            <div class="qualityAssuranceEngineer">
+                <h3>Subtitle</h3>
+            </div>
+
+            <div class="automationEngineer">
+                <h3>Subtitle</h3>
+            </div>
+
+        </div>
+    </body>
+</html>
+
+========================================================================================================================
+ADJACENT SIBLING SELECTORS (TWO CHILDREN NEXT TO EACH OTHER SHARING THE SAME IMMEDIATE PARENT)
+========================================================================================================================
+
+These selectors are used to target an element that has the same immediate parent as the element before it.
+
+Adjacent sibling selectors have the following syntax: S1 + S2, where S2 is the subject of the CSS selector.
+
+<PARENT>
+    <S1></S1>
+    <S2></S2>
+</PARENT>
+
+The selector is a match if S1 and S2 share the same immediate parent in the document tree and S1 immediately comes before S2,
+ignoring non-element nodes (such as text nodes and comments).
+
+<html>
+    <div class="mainModule">
+        <canvas id="myCanvas"></canvas>
+        <video width="320" height="240" controls="controls"></video>
+        <audio controls="controls"></audio>
+        <video width="320" height="240" controls="controls"></video>
+    </div>
+</html>
+
+In the HTML document above, if we want to target ONLY the second video element we cannot do it using only descendant or child selectors.
+
+We have to use adjacent selectors.
+
+The canvas element is immediately followed by the first video element.
+
+The audio element is immediately followed by the second video element.
+
+We can target the second video element using the following syntax
+
+css=audio + video
+
+========================================================================================================================
+TARGETING ELEMENTS THAT CONTAIN SPECIFIC TEXT
+========================================================================================================================
+
+<div class="transportationItems">
+    <ol>
+        <li class="transportItem head">
+            <span>Thomas</span>
+        </li>
+        <li class="transportItem">
+            <span>Percy</span>
+        </li>
+        <li class="transportItem">
+            <span>Gordon</span>
+        </li>
+        <li class="transportItem">
+            <span>Henry</span>
+        </li>
+        <li class="transportItem">
+            <span>James</span>
+        </li>
+        <li class="transportItem">
+            <span>Edward</span>
+        </li>
+        <li class="transportItem">
+            <span>Toby</span>
+        </li>
+        <li class="transportItem last">
+            <span>Emily</span>
+        </li>
+    </ol>
+</div>
+
+If we wanted to target the first element span in the list that contains the string Thomas, we will use the following css selector
+
+css=div.transportationItems li.transportItem.head span:contains("Thomas")
+
+To target that the last item is Emily, we can use the following selector
+
+css=div.transportationItems li.transportItem.last span:contains("Emily")
+        
